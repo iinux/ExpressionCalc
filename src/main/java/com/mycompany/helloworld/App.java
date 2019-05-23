@@ -16,7 +16,8 @@ public class App
     public static void main( String[] args ) throws InterruptedException, IOException, Exception {
 //        WordCount.main(args);
 //        JavaLin.main(args);
-        ExpressionCalculation.main(args);
+//        ExpressionCalculation.main(args);
+        JNA.main(args);
         System.out.println("Hello World1!");
     }
     public static void hitsdb() throws InterruptedException, IOException, Exception {
