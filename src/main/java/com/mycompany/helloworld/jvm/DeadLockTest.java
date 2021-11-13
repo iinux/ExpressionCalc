@@ -9,6 +9,14 @@ package com.mycompany.helloworld.jvm;
 // jcmd pid Thread.print
 // jcmd pid GC.heap_dump <filename>
 // jcmd pid VM.system_properties
+// jcmd pid VM.version
+// jcmd pid VM.command_line
+
+// jstack jcmd jmap jstat jhat
+// jconsole jvisualvm jmc
+
+// oql
+// select classof(classloader).name from instanceof java.lang.ClassLoader classloader
 
 public class DeadLockTest {
     public static void main(String[] args) throws InterruptedException {
