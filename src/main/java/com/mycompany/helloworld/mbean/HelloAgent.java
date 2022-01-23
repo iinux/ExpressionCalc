@@ -1,5 +1,7 @@
 package com.mycompany.helloworld.mbean;
 
+import com.sun.jdmk.comm.HtmlAdaptorServer;
+
 import java.lang.management.ManagementFactory;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -17,14 +19,17 @@ public class HelloAgent {
         ObjectName helloName = new ObjectName("iinux:name=Hello");
         Hello hello = new Hello();
         server.registerMBean(hello, helloName);
-        server.invoke(helloName, "helloWorld", new Object[] { "china sf"}, new String[] {"java.lang.String"});
 
         Jack jack = new Jack();
         server.registerMBean(jack, new ObjectName("iinux:name=Jack"));
         jack.addNotificationListener(new HelloListener(), null, hello);
 
-        int rmiPort = 1099;
+        ObjectName adapterName = new ObjectName("iinux:name=htmladapter,port=8082");
+        HtmlAdaptorServer adapter = new HtmlAdaptorServer();
+        adapter.start();
+        server.registerMBean(adapter, adapterName);
 
+        int rmiPort = 1099;
         Registry registry = LocateRegistry.createRegistry(rmiPort);
 
         // jconsole service:jmx:rmi:///jndi/rmi://localhost:1099/iinux
@@ -32,6 +37,7 @@ public class HelloAgent {
         JMXConnectorServer jmxConnector = JMXConnectorServerFactory.newJMXConnectorServer(url, null, server);
         jmxConnector.start();
 
+        server.invoke(helloName, "helloWorld", new Object[] { "china sf"}, new String[] {"java.lang.String"});
 
         Thread.sleep(Long.MAX_VALUE);
     }
