@@ -15,6 +15,11 @@ package com.mycompany.helloworld.jvm;
 // jstack jcmd jmap jstat jhat
 // jconsole jvisualvm jmc
 
+// jcmd
+// jcmd <pid> JFR.start
+// jcmd <pid> JFR.dump name=1 filename=recording.jfr
+// jfr summary ~/recording.jfr
+
 // oql
 // select classof(classloader).name from instanceof java.lang.ClassLoader classloader
 
