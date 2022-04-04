@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="myService" class="com.mycompany.helloworld.spring.aop.MyServiceImpl" />
+    <bean id="myAdvisor" class="com.mycompany.helloworld.spring.aop.MyAdvisor" />
+    <bean id="myAOP" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <value>com.mycompany.helloworld.spring.aop.MyService</value>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>myAdvisor</value>
+            </list>
+        </property>
+        <property name="target">
+            <ref bean="myService" />
+        </property>
+    </bean>
+</beans>
