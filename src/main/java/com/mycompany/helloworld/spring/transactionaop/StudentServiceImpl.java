@@ -11,5 +11,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void saveStudent(Student student) {
         studentDao.saveStudent(student);
+        throw new RuntimeException("i am exception");
     }
 }
