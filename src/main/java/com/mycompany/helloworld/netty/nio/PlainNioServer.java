@@ -1,4 +1,4 @@
-package com.mycompany.helloworld.netty;
+package com.mycompany.helloworld.netty.nio;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

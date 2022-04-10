@@ -1,4 +1,4 @@
-package com.mycompany.helloworld.netty;
+package com.mycompany.helloworld.netty.httpserver;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
