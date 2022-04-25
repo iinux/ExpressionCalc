@@ -14,6 +14,8 @@ package com.mycompany.helloworld.jvm;
 
 // jstack jcmd jmap jstat jhat
 // jconsole jvisualvm jmc
+// java -cp $JAVA_HOME/lib/sa-jdi.jar sun.jvm.hotspot.HSDB
+// jconsole remote: java -Djava.rmi.server.hostname=10.10.10.10 -Dcom.sun.management.jmxremote  -Dcom.sun.management.jmxremote.port=8999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false A
 
 // jcmd
 // jcmd <pid> JFR.start
