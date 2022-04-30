@@ -12,36 +12,46 @@ public class JNA {
     // customization and mapping of Java to native types.
 
     public interface CLibrary extends Library {
-        CLibrary INSTANCE = (CLibrary)
-                Native.loadLibrary((Platform.isWindows() ? "msvcrt" : "c"),
-                        CLibrary.class);
+        CLibrary INSTANCE = (CLibrary) Native.loadLibrary((Platform.isWindows() ? "msvcrt" : "c"), CLibrary.class);
 
         void printf(String format, Object... args);
     }
 
     public interface Kernel32 extends Library {
         Kernel32 INSTANCE = (Kernel32) Native.loadLibrary("kernel32", Kernel32.class);
-        public boolean Beep(int FREQUENCY, int DURATION);
-        public void Sleep(int DURATION);
+
+        boolean Beep(int FREQUENCY, int DURATION);
+
+        void Sleep(int DURATION);
     }
 
     public interface User32 extends Library {
         User32 INSTANCE = (User32) Native.loadLibrary("user32", User32.class);
-        public boolean LockWorkStation();
-        public int MessageBoxA(int something, String text, String caption, int flags);
-        public int MessageBoxW(int something, WString text, WString caption, int flags);
+
+        boolean LockWorkStation();
+
+        int MessageBoxA(int something, String text, String caption, int flags);
+
+        int MessageBoxW(int something, WString text, WString caption, int flags);
+    }
+
+    public interface PThread extends Library {
+        // [Native.synchronizedLibrary] 阻止多线程同时访问本地代码
+        PThread INSTANCE = (PThread) Native.synchronizedLibrary(
+                (PThread) Native.loadLibrary(
+                        PThread.class.getResource("/secret_udp.so").getPath(),
+                        PThread.class
+                )
+        );
     }
 
     public static void main(String[] args) {
-        CLibrary.INSTANCE.printf("Hello, World\n");
-        for (int i = 0; i < args.length; i++) {
-            CLibrary.INSTANCE.printf("Argument %d: %s\n", i, args[i]);
-        }
+        // CLibrary.INSTANCE.printf("Hello, World\n");
 
         // Kernel32.INSTANCE.Beep(698, 1500);
         // Kernel32.INSTANCE.Sleep(500);
         // User32.INSTANCE.LockWorkStation();
         // User32.INSTANCE.MessageBoxA(0,"MessageBox success!!!","Attention",0);
-        User32.INSTANCE.MessageBoxW(0, new WString("MessageBox success!!!"), new WString("Attention"), 0);
+        int r = User32.INSTANCE.MessageBoxW(0, new WString("MessageBox success!!!"), new WString("Attention"), 0);
     }
 }

@@ -3,3 +3,4 @@ output
 target
 *.iml
 *.hprof
+/jni/libAtest.so
