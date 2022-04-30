@@ -5,3 +5,4 @@ target
 *.hprof
 /jni/libAtest.so
 /javassist/
+/A.class

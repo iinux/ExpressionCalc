@@ -4,8 +4,10 @@ import com.github.houbb.sensitive.annotation.Sensitive;
 import com.github.houbb.sensitive.core.api.strategory.*;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class User {
+public class User implements Serializable {
     @Sensitive(strategy = StrategyChineseName.class)
     private String username;
 
