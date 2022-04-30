@@ -185,6 +185,11 @@
             <artifactId>spring-test</artifactId>
             <version>5.3.19</version>
         </dependency>
+        <dependency>
+            <groupId>com.imohsenb</groupId>
+            <artifactId>ISO8583</artifactId>
+            <version>1.0.5</version>
+        </dependency>
     </dependencies>
 
     <build>
