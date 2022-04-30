@@ -8,6 +8,8 @@ public class JavassistTest {
     @SuppressWarnings("all")
     public static void main(String[] args) throws NotFoundException, CannotCompileException, IllegalAccessException, InstantiationException, IOException {
         ClassPool cp = ClassPool.getDefault();
+        // this will error
+        // CtClass cc = cp.get(Base.class.getName());
         CtClass cc = cp.get("com.mycompany.helloworld.mtasm.Base");
         CtMethod m = cc.getDeclaredMethod("process");
         m.insertBefore("{ System.out.println(\"start\"); }");
