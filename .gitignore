@@ -4,3 +4,4 @@ target
 *.iml
 *.hprof
 /jni/libAtest.so
+/javassist/
