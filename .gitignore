@@ -6,3 +6,4 @@ target
 /jni/libAtest.so
 /javassist/
 /A.class
+/a.xml
