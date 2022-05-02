@@ -1,12 +1,11 @@
 package com.mycompany.helloworld.springboot;
 
-import com.mycompany.helloworld.sensitive.User;
+import com.mycompany.helloworld.springboot.apiversion.ApiVersion;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +20,9 @@ public class HelloController implements CommandLineRunner {
     @Autowired
     private MyFactoryBean myFactoryBean;
 
+    @Autowired
+    private HelloService helloService;
+
     @GetMapping("/allBeans")
     public String[] allBeans() {
         String[] beans = appContext.getBeanDefinitionNames();
@@ -30,13 +32,20 @@ public class HelloController implements CommandLineRunner {
 
     @GetMapping("/newUser")
     public String newUser() {
-        asyncNewUser();
+        helloService.asyncNewUser();
         return "success";
     }
 
-    @Async
-    protected void asyncNewUser() {
-        appContext.publishEvent(new UserRegisterEvent(this, new User()));
+    @ApiVersion("1.0")
+    @GetMapping("/apiVersion")
+    public String apiVersion() {
+        return "api version 1";
+    }
+
+    @ApiVersion("2.0")
+    @GetMapping("/apiVersion")
+    public String apiVersion2() {
+        return "api version 2";
     }
 
     @Override
