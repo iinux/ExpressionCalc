@@ -1,5 +1,8 @@
 package com.mycompany.helloworld.springboot;
 
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
 import jdk.internal.org.objectweb.asm.Type;
 import lombok.AllArgsConstructor;
 import org.junit.Test;
@@ -27,6 +30,26 @@ public class EnhancerStudy {
     // https://www.cnblogs.com/micrari/p/7565632.html
     public static void main(String[] args) {
         System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, System.getProperty("user.dir") + "/cglibclass");
+    }
+
+    @Test
+    public void modifyMethod() {
+        Car car = new Car();
+        car.print();
+        try {
+            ClassPool pool = new ClassPool(true);
+            CtClass ct = pool.getCtClass(car.getClass().getName());// 加载这个类
+            // 获取被修改的方法
+            CtMethod m = ct.getDeclaredMethod("print");
+            m.setBody("System.out.println(\"I am a fake car\");"); // 直接修改方法体
+            // 转为class
+            ct.toClass();
+            // 释放对象
+            ct.detach();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        car.print();
     }
 
     @Test
