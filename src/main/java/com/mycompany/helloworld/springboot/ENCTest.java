@@ -13,8 +13,6 @@ public class ENCTest {
     @Autowired
     StringEncryptor stringEncryptor;
 
-    // will error see https://stackoverflow.com/questions/47487609/unable-to-find-a-springbootconfiguration-you-need-to-use-contextconfiguration
-
     @Test
     public void encryptPwd() {
         String result = stringEncryptor.encrypt("password");

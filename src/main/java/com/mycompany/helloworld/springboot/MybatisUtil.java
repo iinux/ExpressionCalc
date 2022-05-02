@@ -4,6 +4,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
@@ -29,9 +30,6 @@ public class MybatisUtil {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-    private MybatisUtil() {
     }
 
     public static SqlSession getSqlSession() {
@@ -67,8 +65,9 @@ public class MybatisUtil {
         }
     }
 
+    @Test
     public void generator() throws Exception {
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         // 指定 逆向工程配置文件
         File configFile = new File("src/main/resources/generatorConfig.xml");
         // File configFile = new File("generatorConfig.xml");
