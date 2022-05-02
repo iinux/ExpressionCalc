@@ -36,9 +36,9 @@ public class ScheduleAspect {
         System.out.println(key + "," + expireTime);
 
         try {
-            log.info("start schedule {} before", key);
+            log.info("schedule before");
             point.proceed();
-            log.info("start schedule {} after", key);
+            log.info("schedule after");
         } catch (Exception e) {
             log.error("ScheduleAspect failed.", e);
         }

@@ -5,12 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(
-        scanBasePackages = "com.mycompany.helloworld.springboot",
-        exclude = {DataSourceAutoConfiguration.class})
+        scanBasePackages = "com.mycompany.helloworld.springboot")
 // @MapperScan("com.mycompany.helloworld.springboot.db.mapper")
 @EnableScheduling
 @Slf4j
