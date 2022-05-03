@@ -1,32 +1,22 @@
 package com.mycompany.helloworld.springboot;
 
-// import com.mycompany.helloworld.springboot.db.entity.Students;
-// import com.mycompany.helloworld.springboot.db.entity.StudentsExample;
-// import com.mycompany.helloworld.springboot.db.mapper.StudentsMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-// @RunWith(SpringRunner.class)
-// @SpringBootTest
 public class MybatisUtil {
     private static final ThreadLocal<SqlSession> threadLocal = new ThreadLocal<>();
     private static SqlSessionFactory sqlSessionFactory;
@@ -69,21 +59,6 @@ public class MybatisUtil {
             threadLocal.remove();
         }
     }
-
-    /*
-    @Autowired
-    StudentsMapper studentsMapper;
-
-    @Test
-    public void query() {
-        StudentsExample example = new StudentsExample();
-        example.createCriteria().andNameEqualTo("AA");
-        List<Students> result = studentsMapper.selectByExample(example);
-        System.out.println(result);
-
-    }
-
-     */
 
     @Test
     public void generator() throws Exception {

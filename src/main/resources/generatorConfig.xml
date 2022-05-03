@@ -5,6 +5,8 @@
 
 <generatorConfiguration>
     <context id="testTables" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
@@ -12,7 +14,7 @@
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/mytest?useSSL=false" userId="root"
-                        password="test">
+                        password="root">
         </jdbcConnection>
         <!-- <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
             connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg"
@@ -48,7 +50,7 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table tableName="students"/>
+        <table schema="" tableName="students"/>
         <!-- <table schema="" tableName="sys_user"></table>
         <table schema="" tableName="sys_role_permission"></table> -->
 
@@ -56,5 +58,6 @@
          <table schema="" tableName="">
             <columnOverride column="" javaType="" />
         </table> -->
+
     </context>
 </generatorConfiguration>
