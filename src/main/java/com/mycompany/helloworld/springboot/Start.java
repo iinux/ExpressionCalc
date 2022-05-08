@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -23,11 +24,12 @@ import java.io.Reader;
 @Slf4j
 public class Start {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Start.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(Start.class, args);
 
         JSONObject returnObject = new JSONObject();
         returnObject.put("a", "b");
         log.info("started, obj={}", returnObject);
+        context.start();
     }
 
     // @Bean
