@@ -1,20 +1,26 @@
 package com.mycompany.helloworld.springboot;
 
 import com.mycompany.helloworld.sensitive.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
+@Slf4j
 public class HelloService {
     @Autowired
     private ApplicationContext appContext;
 
     @Async
-    public void asyncNewUser() {
+    public void asyncNewUser() throws Exception {
         try {
-            Thread.sleep(5000);
+            log.info("start sleep");
+            TimeUnit.SECONDS.sleep(10);
+            throw new Exception();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

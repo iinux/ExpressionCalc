@@ -15,7 +15,6 @@ public class ListenerAsyncConfiguration implements AsyncConfigurer
     /**
      * 获取异步线程池执行对象
      *
-     * 应该需要加上 @Bean
      */
     @Override
     public Executor getAsyncExecutor() {

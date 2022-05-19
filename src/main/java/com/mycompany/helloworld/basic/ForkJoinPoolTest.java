@@ -27,7 +27,8 @@ public class ForkJoinPoolTest {
         // ForkJoinPool forkJoinPool = new ForkJoinPool(4);
 
         // 创建分治任务
-        Fibonacci fibonacci = new Fibonacci(n);
+        // Fibonacci fibonacci = new Fibonacci(n);
+        Fibonacci2 fibonacci = new Fibonacci2(n);
 
         //调用 invoke 方法启动分治任务
         Integer result = forkJoinPool.invoke(fibonacci);
@@ -48,7 +49,6 @@ class Fibonacci extends RecursiveTask<Integer> {
         if (n <= 1) {
             return n;
         }
-        // 想查看子线程名称输出的可以打开下面注释
         log.info(Thread.currentThread().getName());
 
         Fibonacci f1 = new Fibonacci(n - 1);
@@ -59,5 +59,28 @@ class Fibonacci extends RecursiveTask<Integer> {
         return f1.join() + f2.join();
         // f1.join 等待子任务执行结果
         //  return f2.compute() + f1.join();
+    }
+}
+
+@Slf4j
+class Fibonacci2 extends RecursiveTask<Integer> {
+    final int n;
+    Fibonacci2(int n) {
+        this.n = n;
+    }
+
+    @Override
+    public Integer compute() {
+        // 和递归类似，定义可计算的最小单元
+        if (n <= 1) {
+            return n;
+        }
+        log.info(Thread.currentThread().getName());
+
+        // 拆分成子任务
+        Fibonacci2 f1 = new Fibonacci2(n - 1);
+        Fibonacci2 f2 = new Fibonacci2(n - 2);
+        invokeAll(f1, f2);
+        return f1.join() + f2.join();
     }
 }

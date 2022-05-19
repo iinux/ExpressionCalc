@@ -31,7 +31,7 @@ public class HelloController implements CommandLineRunner {
     }
 
     @GetMapping("/newUser")
-    public String newUser() {
+    public String newUser() throws Exception {
         helloService.asyncNewUser();
         return "success";
     }
