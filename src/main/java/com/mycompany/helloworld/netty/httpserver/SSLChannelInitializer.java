@@ -48,8 +48,5 @@ public class SSLChannelInitializer extends ChannelInitializer<SocketChannel> {
                 .addLast("encoder", new HttpResponseEncoder())
                 .addLast("aggregator", new HttpObjectAggregator(512 * 1024))
                 .addLast("handler", new HttpHandler());
-
-        // pipeline.addLast(new ChunkedWriteHandler());
-        // pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
     }
 }
