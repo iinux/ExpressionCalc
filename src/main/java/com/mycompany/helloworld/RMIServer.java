@@ -29,6 +29,7 @@ interface WorldClock extends Remote {
 class WorldClockService implements WorldClock {
     @Override
     public LocalDateTime getLocalDateTime(String zoneId) throws RemoteException {
+        System.out.println("getLocalDataTime called");
         return LocalDateTime.now(ZoneId.of(zoneId)).withNano(0);
     }
 }

@@ -6,9 +6,11 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.SslHandler;
+import io.netty.handler.stream.ChunkedWriteHandler;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLEngine;
@@ -46,6 +48,5 @@ public class SSLChannelInitializer extends ChannelInitializer<SocketChannel> {
                 .addLast("encoder", new HttpResponseEncoder())
                 .addLast("aggregator", new HttpObjectAggregator(512 * 1024))
                 .addLast("handler", new HttpHandler());
-        ;
     }
 }
