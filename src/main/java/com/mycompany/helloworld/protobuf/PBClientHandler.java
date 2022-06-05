@@ -3,9 +3,9 @@ package com.mycompany.helloworld.protobuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class PBClientHandler extends SimpleChannelInboundHandler<DataInfo.Student> {
+public class PBClientHandler extends SimpleChannelInboundHandler<DataInfo.TypeAndData> {
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, DataInfo.Student student) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, DataInfo.TypeAndData typeAndData) throws Exception {
 
     }
 
@@ -13,8 +13,10 @@ public class PBClientHandler extends SimpleChannelInboundHandler<DataInfo.Studen
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
 
-        DataInfo.Student student = DataInfo.Student.newBuilder().setName("johann").setAge(20).setAddress("beijing")
+        DataInfo.TypeAndData typeAndData = DataInfo.TypeAndData.newBuilder()
+                .setDataType(DataInfo.TypeAndData.DataType.StudentType)
+                .setStudent(DataInfo.Student.newBuilder().setName("johann").setAge(20).setAddress("beijing"))
                 .build();
-        ctx.writeAndFlush(student);
+        ctx.writeAndFlush(typeAndData);
     }
 }
