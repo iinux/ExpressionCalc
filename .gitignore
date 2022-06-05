@@ -8,3 +8,4 @@ target
 /A.class
 /a.xml
 /test.buf
+__pycache__

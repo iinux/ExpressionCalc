@@ -1,4 +1,5 @@
 namespace java com.mycompany.helloworld.thrift
+namespace py py.thrift.generated
 
 typedef i16 short
 typedef i32 int
