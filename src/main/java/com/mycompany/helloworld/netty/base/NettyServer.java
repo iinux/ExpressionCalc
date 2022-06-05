@@ -1,13 +1,14 @@
 package com.mycompany.helloworld.netty.base;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.Delimiters;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 
 public class NettyServer {
 
@@ -32,7 +33,11 @@ public class NettyServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             //对workerGroup的SocketChannel设置处理器
-                            ch.pipeline().addLast(new NettyServerHandler());
+                            ChannelPipeline pipe = ch.pipeline();
+                            pipe.addLast(new NettyServerHandler());
+                            // pipe.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
+                            // pipe.addLast(new LengthFieldPrepender(4));
+                            // pipe.addLast(new DelimiterBasedFrameDecoder(4096, Delimiters.lineDelimiter()));
                         }
                     });
             System.out.println("netty server start。。");
