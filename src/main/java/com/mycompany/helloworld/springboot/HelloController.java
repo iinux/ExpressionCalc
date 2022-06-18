@@ -9,7 +9,10 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 @RestController
@@ -61,5 +64,28 @@ public class HelloController implements CommandLineRunner {
     public void test1() {
         System.out.println(AnnotationUtils.findAnnotation(this.getClass(), Component.class));
         System.out.println(AnnotationUtils.findAnnotation(this.getClass(), Test.class));
+    }
+
+    @Autowired
+    private HttpServletRequest autowiredRequest;
+
+    @GetMapping("/method1")
+    public String method1(HttpServletRequest request) {
+        System.out.println("Request URI: " + request.getRequestURI());
+        return "Invoke HttpServletRequest by method param.";
+    }
+
+    @GetMapping("/method2")
+    public String method2() {
+        System.out.println("Request URI: " + autowiredRequest.getRequestURI());
+        return "Invoke HttpServletRequest by @Autowired.";
+    }
+
+    @GetMapping("/method3")
+    public String method3() {
+        HttpServletRequest request =
+                ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+        System.out.println("Request URI: " + request.getRequestURI());
+        return "Invoke HttpServletRequest by ServletRequestAttributes.";
     }
 }

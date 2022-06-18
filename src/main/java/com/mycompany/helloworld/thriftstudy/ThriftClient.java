@@ -12,7 +12,9 @@ import org.apache.thrift.transport.TTransportException;
 
 public class ThriftClient {
     public static void main(String[] args) throws TException {
-        TTransport transport = new TFramedTransport(new TSocket("localhost", 8899), 600);
+        String host = "localhost";
+        host = "::1";
+        TTransport transport = new TFramedTransport(new TSocket(host, 8899), 600);
         TProtocol protocol = new TCompactProtocol(transport);
         PersonService.Client client = new PersonService.Client(protocol);
 
