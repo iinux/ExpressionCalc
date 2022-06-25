@@ -3,7 +3,7 @@ package com.mycompany.helloworld.springboot;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
-import jdk.internal.org.objectweb.asm.Type;
+// import jdk.internal.org.objectweb.asm.Type;
 import lombok.AllArgsConstructor;
 import org.junit.Test;
 import org.springframework.cglib.core.DebuggingClassWriter;
@@ -63,7 +63,7 @@ public class EnhancerStudy {
                 System.out.println("before");
                 Object res = methodProxy.invokeSuper(obj, args);
                 System.out.println("after");
-                System.out.println(Type.getMethodDescriptor(method));
+                // System.out.println(Type.getMethodDescriptor(method));
                 return res;
             }
         });
