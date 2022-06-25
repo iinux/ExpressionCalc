@@ -1,5 +1,7 @@
 package com.mycompany.helloworld.netty.nio;
 
+import sun.nio.ch.DefaultSelectorProvider;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -13,55 +15,86 @@ import java.util.Set;
 
 public class PlainNioServer {
     public static void main(String[] args) throws IOException {
-        PlainNioServer p = new PlainNioServer();
-        p.serve(8888);
-    }
-    public void serve(int port) throws IOException {
+        InetSocketAddress address = new InetSocketAddress(8888);
+
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
         serverChannel.configureBlocking(false);
+
         ServerSocket ss = serverChannel.socket();
-        InetSocketAddress address = new InetSocketAddress(port);
         ss.bind(address);
+
         Selector selector = Selector.open();
-        serverChannel.register(selector, SelectionKey.OP_ACCEPT);
-        final ByteBuffer msg = ByteBuffer.wrap("Hi!\r\n".getBytes());
+        System.out.println(selector.getClass());
+        System.out.println(DefaultSelectorProvider.create().getClass());
+
+        SelectionKey sk = serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+        System.out.println(sk);
+
+        ByteBuffer msg = ByteBuffer.wrap("Hi!\r\n".getBytes());
+
         for (; ; ) {
             try {
-                selector.select();
+                int number = selector.select();
+                System.out.println(number);
             } catch (IOException ex) {
                 ex.printStackTrace();
-                // handle exception
                 break;
             }
+
             Set<SelectionKey> readyKeys = selector.selectedKeys();
             Iterator<SelectionKey> iterator = readyKeys.iterator();
             while (iterator.hasNext()) {
                 SelectionKey key = iterator.next();
                 iterator.remove();
+
                 try {
                     if (key.isAcceptable()) {
                         ServerSocketChannel server = (ServerSocketChannel) key.channel();
-                        SocketChannel client = server.accept();
-                        client.configureBlocking(false);
-                        client.register(selector, SelectionKey.OP_WRITE | SelectionKey.OP_READ, msg.duplicate());
-                        System.out.println("Accepted connection from " + client);
+                        SocketChannel socketChannel = server.accept();
+                        socketChannel.configureBlocking(false);
+                        socketChannel.register(selector, SelectionKey.OP_WRITE | SelectionKey.OP_READ, msg.duplicate());
+
+                        System.out.println("Accepted connection from " + socketChannel);
                     }
+
                     if (key.isWritable()) {
-                        SocketChannel client = (SocketChannel) key.channel();
+                        SocketChannel socketChannel = (SocketChannel) key.channel();
                         ByteBuffer buffer = (ByteBuffer) key.attachment();
                         while (buffer.hasRemaining()) {
-                            if (client.write(buffer) == 0) {
+                            if (socketChannel.write(buffer) == 0) {
                                 break;
                             }
                         }
-                        client.close();
+                        socketChannel.close();
+                    }
+
+                    if (true)
+                    if (key.isReadable()) {
+                        SocketChannel socketChannel = (SocketChannel) key.channel();
+
+                        int bytesRead = 0;
+                        while (true) {
+                            ByteBuffer byteBuffer = ByteBuffer.allocate(512);
+                            byteBuffer.clear();
+                            int read = socketChannel.read(byteBuffer);
+                            if (read <= 0) {
+                                break;
+                            }
+                            byteBuffer.flip();
+                            socketChannel.write(byteBuffer);
+                            bytesRead += read;
+                        }
+
+                        System.out.println("read " + bytesRead);
                     }
                 } catch (IOException ex) {
-                    key.cancel();
+                    ex.printStackTrace();
+
                     try {
                         key.channel().close();
+                        key.cancel();
                     } catch (IOException cex) {
-                        // 在关闭时忽略
+                        cex.printStackTrace();
                     }
                 }
             }
