@@ -2,6 +2,10 @@ package com.mycompany.helloworld.powermockstudy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserController {
@@ -59,10 +63,37 @@ public class UserController {
         return null;
     }
 
-    public List<Integer> getFlowByPrjId0(int prjId, int status) {
+    public List<Integer> getFlowByPrjId0(Integer prjId, Integer status) {
         // do something
         return null;
     }
+
+    private static class InnerClassA {
+        String name;
+
+        private InnerClassA(String name) {
+            this.name = name;
+        }
+
+        public void run() {
+            System.out.println("InnerClassA run");
+        }
+    }
+
+    public void getAllChildren(int parentNodeId, List<Node> allChildren) {
+        List<Node> children = getChildren(parentNodeId);
+        // some other logic
+        allChildren.addAll(children);
+    }
+
+    public List<Node> getChildren(int nodeId) {
+        List<Node> children = new ArrayList<>();
+        return children;
+    }
+}
+
+class Node {
+
 }
 
 interface UserService {
@@ -94,5 +125,20 @@ class FileHelper {
 
     public static void voidMethod(String name) {
         System.out.println(name);
+    }
+}
+
+class DispatcherServlet extends HttpServlet {
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        System.out.println("DispatcherServlet init");
+    }
+
+    @Override
+    public void destroy() {
+        System.out.println("DispatcherServlet destroy");
     }
 }

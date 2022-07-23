@@ -1,10 +1,8 @@
 package com.mycompany.helloworld.powermockstudy;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
@@ -15,11 +13,18 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletConfig;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.any;
+import static org.powermock.api.mockito.PowerMockito.*;
+import static org.powermock.api.support.membermodification.MemberMatcher.method;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({UserController.class, FileHelper.class})
@@ -39,7 +44,7 @@ public class UserControllerTest {
         // can not stub like this
         // PowerMockito.doReturn(1).when(userService.addUser(ud));
         boolean result = uc.addUser(ud);
-        Assert.assertEquals(result, true);
+        assertEquals(result, true);
     }
 
     @Test
@@ -47,14 +52,15 @@ public class UserControllerTest {
         int toDelete = 1;
         when(userService.delUser(toDelete)).thenThrow(new Exception("mock exception"));
         boolean result = uc.delUser(toDelete);
-        Assert.assertEquals(result, false);
+        assertEquals(result, false);
     }
 
     @Test
     public void mockFileHelper() {
         PowerMockito.mockStatic(FileHelper.class);
-        when(FileHelper.getName("lucy")).thenReturn("lily");
-        Assert.assertEquals(FileHelper.getName("lucy"), "lily");
+        // when(FileHelper.getName("lucy")).thenReturn("lily");
+        when(FileHelper.getName(Matchers.anyString())).thenReturn("lily");
+        assertEquals(FileHelper.getName("lucyx"), "lily");
     }
 
     @Test
@@ -77,7 +83,7 @@ public class UserControllerTest {
 
         when(userService.modUser(ud)).thenReturn(moded);
 
-        UserController uc2 = PowerMockito.mock(UserController.class);
+        UserController uc2 = mock(UserController.class);
 
         // 给没有 setter 方法的 私有字段 赋值。
         // 需要注意的是：此处的uc2是mock出来的，不是 UserControllerTest 类中的成员变量 uc
@@ -92,7 +98,7 @@ public class UserControllerTest {
 
         boolean result = uc2.modUser(ud);
 
-        Assert.assertEquals(result, true);
+        assertEquals(result, true);
     }
 
     @Test
@@ -103,12 +109,12 @@ public class UserControllerTest {
         when(userService.modUser(ud)).thenReturn(moded);
 
         // 对uc进行监视
-        uc = PowerMockito.spy(uc);
+        uc = spy(uc);
         // 当uc的verifyMod被执行时，将被mock掉
         when(uc, "verifyMod", moded).thenReturn(true);
         boolean result = uc.modUser(ud);
 
-        Assert.assertEquals(result, true);
+        assertEquals(result, true);
 
         // 使用spy方法可以避免执行被测类中的成员函数，即mock掉不想被执行的私有方法。
     }
@@ -116,17 +122,17 @@ public class UserControllerTest {
     @Test
     public void testVerifyMod() throws Exception { // 不依赖 @RunWith(PowerMockRunner.class)
         // 获取Method对象，
-        Method method = PowerMockito.method(UserController.class, "verifyMod", int.class);
+        Method method = method(UserController.class, "verifyMod", int.class);
         // 调用Method的invoke方法来执行
         boolean result = (boolean) method.invoke(uc, 1);
-        Assert.assertEquals(result, true);
+        assertEquals(result, true);
     }
 
     @Test
     public void testVerifyMod2() throws Exception { // 不依赖 @RunWith(PowerMockRunner.class)
         // 通过 Whitebox 来执行
         boolean result = Whitebox.invokeMethod(uc, "verifyMod", 1);
-        Assert.assertEquals(result, true);
+        assertEquals(result, true);
     }
 
     @Test
@@ -138,7 +144,7 @@ public class UserControllerTest {
 
         int count = uc.countUser();
 
-        Assert.assertEquals(count, 1);
+        assertEquals(count, 1);
     }
 
     @Test
@@ -164,12 +170,56 @@ public class UserControllerTest {
             }
         });
 
-//        when(uc.getFlowByPrjId(anyInt(), (Integer[]) Matchers.anyVararg())).thenReturn(ai);
-        when(uc.getFlowByPrjId0(Mockito.anyInt(), Mockito.anyInt())).thenReturn(ai);
+        UserController uc = spy(new UserController());
+        when(uc.getFlowByPrjId(anyInt(), (Integer[]) Matchers.anyVararg())).thenReturn(ai);
+        when(uc.getFlowByPrjId0(any(), any())).thenReturn(ai);
+        // 报 org.mockito.exceptions.misusing.InvalidUseOfMatchersException 需要有 spy()
 
         ArrayList<Integer> bi = new ArrayList<>();
         System.out.println(bi);
 
         System.out.println(uc.getFlowByPrjId(1, 1));
+        System.out.println(uc.getFlowByPrjId0(1, 1));
     }
+
+    @Test
+    public void mockPrivateInnerClass() throws Exception {
+        Class clazz = Whitebox.getInnerClassType(UserController.class, "InnerClassA");
+        Constructor constructor = Whitebox.getConstructor(clazz, String.class);
+        // the constructor needs a string parameter
+        Object object = constructor.newInstance("mock name");
+        // run the 'run' method
+        Whitebox.invokeMethod(object, "run");
+    }
+
+    @Test
+    public void testInit() throws Exception {
+        DispatcherServlet ds = spy(new DispatcherServlet());
+
+        // use "method()" to get the "init" method which is defined in "GenericServlet"
+        // use "suppress()" to suppress the "init" method
+        suppress(method(GenericServlet.class, "init", ServletConfig.class));
+
+        System.out.println("start init");
+        ds.init(mock(ServletConfig.class));
+        // other to do ...
+    }
+
+    @Test
+    public void test1() throws InterruptedException {
+        UserController ns = new UserController();
+        ns = spy(ns);
+
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(new Node());
+        nodes.add(new Node());
+        when(ns.getChildren(anyInt())).thenReturn(nodes);
+
+        List<Node> result = new ArrayList<>();
+        ns.getAllChildren(1, result);
+
+        assertEquals(result.size(), 2);
+        Thread.sleep(Long.MAX_VALUE);
+    }
+
 }
