@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/pako/2.0.4/pako.min.js"></script>
+
     <script>
-        //解压
+        // http://qiutianaimeili.com/html/page/2019/12/bncs8g07hcg.html
+        
         function unzip(strData) {
             // Convert binary string to character-number array
             const charData = strData.split('').map(function (x) {
@@ -96,12 +101,24 @@
         }
 
         window.onload = function () {
+            console.log("页面加载完成====》onload");
             req2();
         };
-    </script>
 
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/pako/2.0.4/pako.min.js"></script>
+        $(document).ready(function () {
+            console.log("jquery====》document ready");
+        });
+
+        $(function(){
+            console.log("jquery====》document onload");
+        });
+
+        function aaa(){
+            // <body onload="aaa()">
+            // 导致 window.onload = function 无效
+            console.log("静态标签====》onload");
+        }
+    </script>
 </head>
 <body>
 <p>hello world</p>

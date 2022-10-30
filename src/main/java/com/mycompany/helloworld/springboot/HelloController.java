@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Base64;
 
 @RestController
-@CrossOrigin
+// @CrossOrigin // 用filter 实现也可以
 public class HelloController implements CommandLineRunner {
     @Autowired
     private ApplicationContext appContext;
