@@ -29,11 +29,11 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="studentDao" class="com.mycompany.helloworld.spring.transactionaop.StudentDaoImpl">
+    <bean id="studentDao" class="cn.iinux.java.alpha.spring.transactionaop.StudentDaoImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
 
-    <bean id="studentService" class="com.mycompany.helloworld.spring.transactionaop.StudentServiceImpl">
+    <bean id="studentService" class="cn.iinux.java.alpha.spring.transactionaop.StudentServiceImpl">
         <property name="studentDao" ref="studentDao" />
     </bean>
 

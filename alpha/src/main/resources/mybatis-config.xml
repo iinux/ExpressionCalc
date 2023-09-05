@@ -26,7 +26,7 @@
 
     <!--便于后面解析对象-->
     <typeAliases>
-        <package name="com.mycompany.helloworld.springboot.db" />
+        <package name="cn.iinux.java.alpha.springboot.db" />
     </typeAliases>
     <!-- Continue going here -->
     <environments default="dev">

@@ -1,4 +1,4 @@
-namespace java com.mycompany.helloworld.thrift
+namespace java cn.iinux.java.alpha.thrift
 namespace py py.thrift.generated
 
 typedef i16 short

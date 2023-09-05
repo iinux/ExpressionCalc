@@ -1,9 +1,9 @@
 syntax = "proto2";
 
-package com.mycompany.helloworld.protobuf;
+package cn.iinux.java.alpha.protobuf;
 
 option optimize_for = SPEED;
-option java_package = "com.mycompany.helloworld.protobuf";
+option java_package = "cn.iinux.java.alpha.protobuf";
 option java_outer_classname = "DataInfo";
 
 message TypeAndData {

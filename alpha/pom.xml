@@ -457,7 +457,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.mycompany.helloworld.springboot.Start</mainClass>
+                            <mainClass>cn.iinux.java.alpha.springboot.Start</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

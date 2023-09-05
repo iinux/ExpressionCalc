@@ -1,4 +1,4 @@
-import com.mycompany.helloworld.drl.User               // 导入类
+import cn.iinux.java.alpha.drl.User               // 导入类
 
 dialect  "mvel"
 

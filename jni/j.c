@@ -8,6 +8,6 @@
  * Method:    hello
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_mycompany_helloworld_JNI_hello(JNIEnv * a, jobject b){
+JNIEXPORT void JNICALL Java_cn_iinux_java_alpha_JNI_hello(JNIEnv * a, jobject b){
    printf("hello,world");
 }
