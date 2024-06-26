@@ -1,5 +1,6 @@
 package cn.iinux.java.alpha.protobuf;
 
+/*
 public class ProtoBufStudy {
     public static void main(String[] args) throws Exception {
         DataInfo.Student student = DataInfo.Student.newBuilder()
@@ -16,3 +17,6 @@ public class ProtoBufStudy {
         System.out.println(student2.getAddress());
     }
 }
+
+
+ */

@@ -3,6 +3,7 @@ package cn.iinux.java.alpha.protobuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+/*
 public class PBClientHandler extends SimpleChannelInboundHandler<DataInfo.TypeAndData> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, DataInfo.TypeAndData typeAndData) throws Exception {
@@ -20,3 +21,6 @@ public class PBClientHandler extends SimpleChannelInboundHandler<DataInfo.TypeAn
         ctx.writeAndFlush(typeAndData);
     }
 }
+
+
+ */

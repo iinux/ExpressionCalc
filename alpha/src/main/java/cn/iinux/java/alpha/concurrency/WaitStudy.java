@@ -2,11 +2,15 @@ package cn.iinux.java.alpha.concurrency;
 
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.LockSupport;
 
 public class WaitStudy {
     @SuppressWarnings("all")
     public static void main(String[] args) throws InterruptedException {
+        WaitStudy ws = new WaitStudy();
+        ws.park3();
         Object object = new Object();
         synchronized (object) {
             object.wait();
@@ -87,5 +91,47 @@ public class WaitStudy {
         }
 
         Thread.sleep(Long.MAX_VALUE);
+    }
+
+    @Test
+    public void park() throws InterruptedException {
+        Thread thread1 = new Thread(() -> {
+            System.out.println("before park");
+            LockSupport.park();
+            System.out.println("after park");
+        });
+        thread1.start();
+
+        System.out.println("before sleep");
+        Thread.sleep(1000);
+        System.out.println("after sleep");
+        LockSupport.unpark(thread1);
+
+        System.out.println("pause");
+        Thread.sleep(Long.MAX_VALUE);
+    }
+
+    @Test
+    public void park2() throws InterruptedException {
+        Object blocker = new Object();
+        Thread thread1 = new Thread(() -> {
+            System.out.println("before park");
+            LockSupport.park(blocker);
+            System.out.println("after park");
+        });
+        thread1.start();
+
+        System.out.println("before sleep");
+        Thread.sleep(1000);
+        System.out.println("after sleep");
+        LockSupport.unpark(thread1);
+
+        System.out.println("pause");
+        Thread.sleep(Long.MAX_VALUE);
+    }
+
+    @Test
+    public void park3() throws InterruptedException {
+        LockSupport.park(1);
     }
 }

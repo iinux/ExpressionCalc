@@ -8,6 +8,7 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
+/*
 public class PBServerChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
@@ -20,3 +21,6 @@ public class PBServerChannelInitializer extends ChannelInitializer<SocketChannel
 
     }
 }
+
+
+ */
