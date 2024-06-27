@@ -456,6 +456,7 @@
             <groupId>co.paralleluniverse</groupId>
             <artifactId>quasar-core</artifactId>
             <version>0.7.4</version>
+<!--            <version>0.8.0</version>-->
             <classifier>jdk8</classifier>
         </dependency>
     </dependencies>
